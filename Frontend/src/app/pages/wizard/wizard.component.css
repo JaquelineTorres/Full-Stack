@@ -1,0 +1,17 @@
+.medicosCSS{
+  background: red;
+  color: white;
+}
+
+.consultorioCSS{
+  background: blueviolet;
+  color: white;
+}
+
+#consultorio{
+  height: 100%;
+  width: 100%;
+  background-color: rgb(9, 93, 148);
+  color: white;
+  text-align: center;
+}

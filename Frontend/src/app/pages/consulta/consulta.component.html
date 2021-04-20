@@ -1,0 +1,96 @@
+<mat-toolbar>Resgitro de Consultas</mat-toolbar>
+
+<div class="example-container">
+
+  <mat-form-field>
+        <!--Al seleccionar un valor, se estaría guardando en esta variable [(value)] = "idMedicoSeleccionado"-->
+    <mat-select placeholder="Selecciona paciente" [(value)] = "idPacienteSeleccionado">
+      <!--Para cads p de pacientes-->
+      <!--El conboBox estará definida por idPaciente [value] = "p.idPaciente-->
+      <!--(pacientes$ | async) es la forma de hacer un subcribe a un Observable-->
+      <mat-option *ngFor = "let p of (pacientes$ | async)" [value] = "p.idPaciente">
+        <!--Mostrar-->
+        {{p.nombre}} {{p.apellidos}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <!--Al seleccionar un valor, se estaría guardando en esta variable [(value)] = "idMedicoSeleccionado"-->
+    <mat-select placeholder="Selecciona medico" [(value)] = "idMedicoSeleccionado">
+      <!--Para cads p de pacientes-->
+      <!--El conboBox estará definida por idPaciente [value] = "p.idPaciente-->
+      <!--(pacientes$ | async) es la forma de hacer un subcribe a un Observable-->
+      <mat-option *ngFor = "let m of (medicos$ | async)" [value] = "m.idMedico">
+        <!--Mostrar-->
+        {{m.nombres}} {{m.apellidos}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Selecciona especialidad" [(value)] = "idEspecialidadSeleccionado">
+      <!--Para cads p de pacientes-->
+      <!--El conboBox estará definida por idPaciente [value] = "p.idPaciente-->
+      <!--(pacientes$ | async) es la forma de hacer un subcribe a un Observable-->
+      <mat-option *ngFor = "let e of (especialidades$ | async)" [value] = "e.idEspecialidad">
+        <!--Mostrar-->
+        {{e.nombre}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [matDatepicker] = "picker" placeholder="Escoger una fecha (dd/mm/yyy)"
+        [(ngModel)] = "fechaSeleccionada" [max] = "maxFecha">
+    <mat-datepicker-toggle matSuffix [for] = "picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Diagnostico" [(ngModel)] = diagnostico>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Tratamiento" [(ngModel)] = "tratamiento"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color = "primary" (click) = "agregar()">Agregar Detalle</button>
+
+  <mat-expansion-panel *ngFor="let d of detalleConsulta; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{i+1}} {{d.diagnostico}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Ver Tratamiento
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Tratamiento" value = "{{d.tratamiento}}"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color = "warn" (click)="removerDiagnostico(i)">Remover</button>
+  </mat-expansion-panel>
+
+  <!--PRIMITIVOS-->
+  <mat-form-field>
+    <mat-select placeholder="Selecciona examen" [(value)]="idExamenSeleccionado">
+        <mat-option *ngFor="let e of (examenes$ | async)" [value]="e.idExamen">
+            {{ e.nombre }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="agregarExamen()">Agregar Examen</button>
+
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let ex of examenesSeleccionados; let i = index">
+        {{ex.idExamen}} {{ex.nombre}}
+        <button mat-raised-button color="warn" (click)="removerExamen(i)">Remover</button>
+    </mat-list-item>
+</mat-list>
+
+<button mat-raised-button color="primary" (click)="aceptar()" [disabled]="estadoBotonRegistrar()">Registrar</button>
+
+</div>

@@ -1,0 +1,14 @@
+.example-container{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.example-container>*{
+  width: 100%;
+
+}
+
+.invalido{
+  color: brown;
+}
